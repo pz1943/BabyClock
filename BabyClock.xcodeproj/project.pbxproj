@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C06A4181E098031009BA76E /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C06A4171E098031009BA76E /* SettingTableViewController.swift */; };
 		2C4DF6691DFEBDEB000B141E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6681DFEBDEB000B141E /* AppDelegate.swift */; };
-		2C4DF66B1DFEBDEB000B141E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF66A1DFEBDEB000B141E /* RootViewController.swift */; };
-		2C4DF66D1DFEBDEB000B141E /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF66C1DFEBDEB000B141E /* DataViewController.swift */; };
-		2C4DF66F1DFEBDEB000B141E /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF66E1DFEBDEB000B141E /* ModelController.swift */; };
 		2C4DF6721DFEBDEB000B141E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C4DF6701DFEBDEB000B141E /* Main.storyboard */; };
 		2C4DF6741DFEBDEB000B141E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C4DF6731DFEBDEB000B141E /* Assets.xcassets */; };
 		2C4DF6771DFEBDEB000B141E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C4DF6751DFEBDEB000B141E /* LaunchScreen.storyboard */; };
 		2C4DF6821DFEBDEB000B141E /* BabyClockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6811DFEBDEB000B141E /* BabyClockTests.swift */; };
 		2C4DF68D1DFEBDEB000B141E /* BabyClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF68C1DFEBDEB000B141E /* BabyClockUITests.swift */; };
+		2C4DF69B1DFEC0B8000B141E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF69A1DFEC0B8000B141E /* RootViewController.swift */; };
+		2C4DF69D1DFEC0E7000B141E /* ClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF69C1DFEC0E7000B141E /* ClockViewController.swift */; };
+		2C4DF6A11DFECF52000B141E /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A01DFECF52000B141E /* DBModel.swift */; };
+		2C4DF6A31DFFE7E4000B141E /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A21DFFE7E4000B141E /* RecordTableViewCell.swift */; };
+		2C4DF6A71E0129BE000B141E /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A61E0129BD000B141E /* Record.swift */; };
+		2C6D78181E08383D00C81B90 /* RecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D78171E08383D00C81B90 /* RecordsTableViewController.swift */; };
+		2CD2D4971E0635D10070AA7A /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD2D4961E0635D10070AA7A /* Charts.framework */; };
+		2CD2D4981E0635D10070AA7A /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD2D4961E0635D10070AA7A /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3967C826A44ECC768A3388D6 /* Pods_BabyClock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85C6D7CE889D2EFFE4932A92 /* Pods_BabyClock.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,12 +42,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2CD2D4991E0635D10070AA7A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2CD2D4981E0635D10070AA7A /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2C06A4171E098031009BA76E /* SettingTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		2C4DF6651DFEBDEB000B141E /* BabyClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabyClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4DF6681DFEBDEB000B141E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2C4DF66A1DFEBDEB000B141E /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		2C4DF66C1DFEBDEB000B141E /* DataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
-		2C4DF66E1DFEBDEB000B141E /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		2C4DF6711DFEBDEB000B141E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2C4DF6731DFEBDEB000B141E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C4DF6761DFEBDEB000B141E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +70,16 @@
 		2C4DF6881DFEBDEB000B141E /* BabyClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BabyClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4DF68C1DFEBDEB000B141E /* BabyClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyClockUITests.swift; sourceTree = "<group>"; };
 		2C4DF68E1DFEBDEB000B141E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C4DF69A1DFEC0B8000B141E /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		2C4DF69C1DFEC0E7000B141E /* ClockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockViewController.swift; sourceTree = "<group>"; };
+		2C4DF6A01DFECF52000B141E /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
+		2C4DF6A21DFFE7E4000B141E /* RecordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
+		2C4DF6A61E0129BD000B141E /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		2C6D78171E08383D00C81B90 /* RecordsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsTableViewController.swift; sourceTree = "<group>"; };
+		2CD2D4961E0635D10070AA7A /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AD37C9318D0CA48B1D89296 /* Pods-BabyClock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyClock.release.xcconfig"; path = "Pods/Target Support Files/Pods-BabyClock/Pods-BabyClock.release.xcconfig"; sourceTree = "<group>"; };
+		7B6DCF4561689C39EA6A9DF2 /* Pods-BabyClock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyClock.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BabyClock/Pods-BabyClock.debug.xcconfig"; sourceTree = "<group>"; };
+		85C6D7CE889D2EFFE4932A92 /* Pods_BabyClock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyClock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3967C826A44ECC768A3388D6 /* Pods_BabyClock.framework in Frameworks */,
+				2CD2D4971E0635D10070AA7A /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +116,8 @@
 				2C4DF6801DFEBDEB000B141E /* BabyClockTests */,
 				2C4DF68B1DFEBDEB000B141E /* BabyClockUITests */,
 				2C4DF6661DFEBDEB000B141E /* Products */,
+				50475EE0ABE8882C83E9F866 /* Pods */,
+				D620D3FC4C3AC0AC6B5B64EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,12 +134,16 @@
 		2C4DF6671DFEBDEB000B141E /* BabyClock */ = {
 			isa = PBXGroup;
 			children = (
+				2C4DF69A1DFEC0B8000B141E /* RootViewController.swift */,
+				2C4DF69C1DFEC0E7000B141E /* ClockViewController.swift */,
+				2C6D78171E08383D00C81B90 /* RecordsTableViewController.swift */,
+				2C4DF6A21DFFE7E4000B141E /* RecordTableViewCell.swift */,
+				2C06A4171E098031009BA76E /* SettingTableViewController.swift */,
+				2C4DF6A01DFECF52000B141E /* DBModel.swift */,
+				2C4DF6A61E0129BD000B141E /* Record.swift */,
 				2C4DF6681DFEBDEB000B141E /* AppDelegate.swift */,
-				2C4DF66A1DFEBDEB000B141E /* RootViewController.swift */,
-				2C4DF66C1DFEBDEB000B141E /* DataViewController.swift */,
-				2C4DF66E1DFEBDEB000B141E /* ModelController.swift */,
-				2C4DF6701DFEBDEB000B141E /* Main.storyboard */,
 				2C4DF6731DFEBDEB000B141E /* Assets.xcassets */,
+				2C4DF6701DFEBDEB000B141E /* Main.storyboard */,
 				2C4DF6751DFEBDEB000B141E /* LaunchScreen.storyboard */,
 				2C4DF6781DFEBDEB000B141E /* Info.plist */,
 			);
@@ -131,6 +168,24 @@
 			path = BabyClockUITests;
 			sourceTree = "<group>";
 		};
+		50475EE0ABE8882C83E9F866 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B6DCF4561689C39EA6A9DF2 /* Pods-BabyClock.debug.xcconfig */,
+				5AD37C9318D0CA48B1D89296 /* Pods-BabyClock.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D620D3FC4C3AC0AC6B5B64EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2CD2D4961E0635D10070AA7A /* Charts.framework */,
+				85C6D7CE889D2EFFE4932A92 /* Pods_BabyClock.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,9 +193,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C4DF6911DFEBDEB000B141E /* Build configuration list for PBXNativeTarget "BabyClock" */;
 			buildPhases = (
+				90736F02DE096A631959F820 /* [CP] Check Pods Manifest.lock */,
 				2C4DF6611DFEBDEB000B141E /* Sources */,
 				2C4DF6621DFEBDEB000B141E /* Frameworks */,
 				2C4DF6631DFEBDEB000B141E /* Resources */,
+				EF976AAB4AB1B90E0E50DD81 /* [CP] Embed Pods Frameworks */,
+				E4DD3624F48A429C70589E4E /* [CP] Copy Pods Resources */,
+				2CD2D4991E0635D10070AA7A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -194,20 +253,24 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = pz1943;
 				TargetAttributes = {
 					2C4DF6641DFEBDEB000B141E = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = N84TL62Z6P;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
 					2C4DF67C1DFEBDEB000B141E = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2C4DF6641DFEBDEB000B141E;
 					};
 					2C4DF6871DFEBDEB000B141E = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2C4DF6641DFEBDEB000B141E;
 					};
@@ -260,14 +323,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		90736F02DE096A631959F820 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E4DD3624F48A429C70589E4E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BabyClock/Pods-BabyClock-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF976AAB4AB1B90E0E50DD81 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BabyClock/Pods-BabyClock-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2C4DF6611DFEBDEB000B141E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C4DF66B1DFEBDEB000B141E /* RootViewController.swift in Sources */,
-				2C4DF66F1DFEBDEB000B141E /* ModelController.swift in Sources */,
-				2C4DF66D1DFEBDEB000B141E /* DataViewController.swift in Sources */,
+				2C6D78181E08383D00C81B90 /* RecordsTableViewController.swift in Sources */,
+				2C4DF6A11DFECF52000B141E /* DBModel.swift in Sources */,
+				2C4DF69D1DFEC0E7000B141E /* ClockViewController.swift in Sources */,
+				2C4DF6A31DFFE7E4000B141E /* RecordTableViewCell.swift in Sources */,
+				2C4DF69B1DFEC0B8000B141E /* RootViewController.swift in Sources */,
+				2C4DF6A71E0129BE000B141E /* Record.swift in Sources */,
+				2C06A4181E098031009BA76E /* SettingTableViewController.swift in Sources */,
 				2C4DF6691DFEBDEB000B141E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +456,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -363,7 +479,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -391,6 +507,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -407,7 +524,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -418,9 +535,14 @@
 		};
 		2C4DF6921DFEBDEB000B141E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B6DCF4561689C39EA6A9DF2 /* Pods-BabyClock.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N84TL62Z6P;
 				INFOPLIST_FILE = BabyClock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pz1943.BabyClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -430,9 +552,14 @@
 		};
 		2C4DF6931DFEBDEB000B141E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AD37C9318D0CA48B1D89296 /* Pods-BabyClock.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = N84TL62Z6P;
 				INFOPLIST_FILE = BabyClock/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pz1943.BabyClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -513,6 +640,7 @@
 				2C4DF6931DFEBDEB000B141E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C4DF6941DFEBDEB000B141E /* Build configuration list for PBXNativeTarget "BabyClockTests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +649,7 @@
 				2C4DF6961DFEBDEB000B141E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C4DF6971DFEBDEB000B141E /* Build configuration list for PBXNativeTarget "BabyClockUITests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +658,7 @@
 				2C4DF6991DFEBDEB000B141E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
