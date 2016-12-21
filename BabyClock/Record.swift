@@ -14,6 +14,7 @@ enum Event: String {
     case FallAsleep = "入睡"
     case eat = "吃奶"
     case pop = "臭臭"
+    case all = "全部"
 }
 
 struct Record {
@@ -117,6 +118,7 @@ struct Record {
             case .WakeUp: return "共睡眠"
             case .eat: return "间隔"
             case .pop: return "间隔"
+            default: return ""
             }
         }
     }

@@ -22,11 +22,37 @@ class RecordsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    @IBAction func eventFilter(_ sender: UIButton) {
+        let alert = UIAlertController(title: "筛选", message: "请选择要显示的类别", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Event.FallAsleep.rawValue, style: .default, handler: { (action) in
+            self.filterEvent = Event.FallAsleep
+            self.reloadRecords()
+        }))
+
+        alert.addAction(UIAlertAction(title: Event.WakeUp.rawValue, style: .default, handler: { (action) in
+            self.filterEvent = Event.WakeUp
+            self.reloadRecords()
+        }))
+        alert.addAction(UIAlertAction(title: Event.eat.rawValue, style: .default, handler: { (action) in
+            self.filterEvent = Event.eat
+            self.reloadRecords()
+        }))
+        alert.addAction(UIAlertAction(title: Event.pop.rawValue, style: .default, handler: { (action) in
+            self.filterEvent = Event.pop
+            self.reloadRecords()
+        }))
+        alert.addAction(UIAlertAction(title: Event.all.rawValue, style: .default, handler: { (action) in
+            self.filterEvent = Event.all
+            self.reloadRecords()
+        }))
+        self.present(alert, animated: false) {        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         reloadRecords()
     }
     var DB: RecordDB = RecordDB()
-
+    var filterEvent = Event.all
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -38,18 +64,17 @@ class RecordsTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return DB.count
+        return DB.countOfEvent(event: filterEvent)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let record = DB.loadRecordFromIndex(indexPath.row)
+        let record = DB.loadRecordFromIndexOfEvent(indexPath.row, event: filterEvent)
         let cell = tableView.dequeueReusableCell(withIdentifier: "record cell", for: indexPath) as! RecordTableViewCell
         if record != nil {
             cell.EventName.text = record?.eventName
@@ -60,7 +85,6 @@ class RecordsTableViewController: UITableViewController {
         }
         return cell
     }
-    
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true

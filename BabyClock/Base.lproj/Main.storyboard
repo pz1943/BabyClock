@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RyE-hi-dMK" id="HtD-Ry-m5o">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12月15日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMV-7n-top">
@@ -94,7 +94,18 @@
                             <outlet property="delegate" destination="S30-QP-lai" id="6aT-46-L1I"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="数据表" id="2qm-eq-rD6"/>
+                    <navigationItem key="navigationItem" title="数据表" id="2qm-eq-rD6">
+                        <barButtonItem key="rightBarButtonItem" id="hPH-3z-iLl">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jfK-cI-P6b">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="筛选"/>
+                                <connections>
+                                    <action selector="eventFilter:" destination="S30-QP-lai" eventType="touchUpInside" id="jgX-At-XnJ"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fx-TD-yIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

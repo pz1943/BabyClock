@@ -37,8 +37,6 @@ class DBModel {
     }
 }
 
-
-
 enum ExpressionTitle:  String, CustomStringConvertible{
     case ID = "ID"
     case EVENTNAME = "事件名称"
@@ -50,7 +48,6 @@ enum ExpressionTitle:  String, CustomStringConvertible{
         }
     }
 }
-
 
 class RecordDB {
     fileprivate var db: Connection
@@ -66,6 +63,12 @@ class RecordDB {
         }
     }
     
+    func countOfEvent(event: Event) -> Int {
+        if event == Event.all {return count }
+        else {
+            return try! self.db.scalar(recordTable.filter(self.eventNameExpression == event.rawValue).count)
+        }
+    }
     init() {
         self.db = DBModel.sharedInstance.getDB()
         self.recordTable = Table("recordTable")
@@ -133,6 +136,18 @@ class RecordDB {
         if let row = try! db.pluck(alice) {
             return Record(ID: row[self.IDExpression], eventName: row[eventNameExpression], time: row[timeExpression])
         } else { return nil }
+    }
+    
+    func loadRecordFromIndexOfEvent(_ index: Int, event: Event) -> Record? {
+        if event == Event.all {
+            return loadRecordFromIndex(index)
+        } else {
+            let count = countOfEvent(event: event)
+            let alice = recordTable.filter(self.eventNameExpression == event.rawValue).limit(1, offset: count - 1 - index)
+            if let row = try! db.pluck(alice) {
+                return Record(ID: row[self.IDExpression], eventName: row[eventNameExpression], time: row[timeExpression])
+            } else { return nil }
+        }
     }
     
     func loadNewestRecord() -> Record? {
