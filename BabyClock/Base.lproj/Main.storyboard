@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RyE-hi-dMK" id="HtD-Ry-m5o">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12月15日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMV-7n-top">
@@ -95,21 +95,98 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="数据表" id="2qm-eq-rD6">
-                        <barButtonItem key="rightBarButtonItem" id="hPH-3z-iLl">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jfK-cI-P6b">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="筛选"/>
-                                <connections>
-                                    <action selector="eventFilter:" destination="S30-QP-lai" eventType="touchUpInside" id="jgX-At-XnJ"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="筛选" id="E47-RE-foi">
+                            <connections>
+                                <segue destination="zp9-IR-hKL" kind="popoverPresentation" popoverAnchorBarButtonItem="E47-RE-foi" id="p8J-Vg-D9s">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fx-TD-yIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1759.2" y="141.67916041979012"/>
+        </scene>
+        <!--Filter Selecting View Controller-->
+        <scene sceneID="Fdw-ce-4ON">
+            <objects>
+                <viewController id="zp9-IR-hKL" customClass="FilterSelectingViewController" customModule="BabyClock" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AAM-h3-oma"/>
+                        <viewControllerLayoutGuide type="bottom" id="Au8-qj-5zH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Bn5-Gu-hFl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zq1-rF-Q1r">
+                                <rect key="frame" x="16" y="20" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="l04-fh-Ek7"/>
+                                </constraints>
+                                <state key="normal" title="全部"/>
+                                <connections>
+                                    <action selector="all:" destination="zp9-IR-hKL" eventType="touchUpInside" id="WA1-qK-y39"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9CN-rC-ZCJ">
+                                <rect key="frame" x="16" y="58" width="60" height="30"/>
+                                <state key="normal" title="入睡"/>
+                                <connections>
+                                    <action selector="sleep:" destination="zp9-IR-hKL" eventType="touchUpInside" id="HrV-R5-eGs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="91c-r2-Xcm">
+                                <rect key="frame" x="16" y="96" width="60" height="30"/>
+                                <state key="normal" title="醒来"/>
+                                <connections>
+                                    <action selector="weakUp:" destination="zp9-IR-hKL" eventType="touchUpInside" id="x9F-cb-uFL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IiV-Sc-Waw">
+                                <rect key="frame" x="16" y="134" width="60" height="30"/>
+                                <state key="normal" title="吃奶"/>
+                                <connections>
+                                    <action selector="eat:" destination="zp9-IR-hKL" eventType="touchUpInside" id="dBD-bO-822"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JV0-xY-J64">
+                                <rect key="frame" x="16" y="172" width="60" height="30"/>
+                                <state key="normal" title="臭臭"/>
+                                <connections>
+                                    <action selector="pop:" destination="zp9-IR-hKL" eventType="touchUpInside" id="0oh-dU-i9P"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JV0-xY-J64" firstAttribute="centerX" secondItem="IiV-Sc-Waw" secondAttribute="centerX" id="4sU-V7-gaM"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="zq1-rF-Q1r" secondAttribute="leading" id="7Zg-q1-ess"/>
+                            <constraint firstItem="91c-r2-Xcm" firstAttribute="width" secondItem="9CN-rC-ZCJ" secondAttribute="width" id="7aH-k5-lfW"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zq1-rF-Q1r" secondAttribute="trailing" id="97n-cD-j4Y"/>
+                            <constraint firstItem="IiV-Sc-Waw" firstAttribute="width" secondItem="JV0-xY-J64" secondAttribute="width" id="DpB-u9-V9Q"/>
+                            <constraint firstItem="zq1-rF-Q1r" firstAttribute="centerX" secondItem="9CN-rC-ZCJ" secondAttribute="centerX" id="ESC-7C-OBT"/>
+                            <constraint firstItem="91c-r2-Xcm" firstAttribute="top" secondItem="9CN-rC-ZCJ" secondAttribute="bottom" constant="8" symbolic="YES" id="cht-xx-wFA"/>
+                            <constraint firstItem="IiV-Sc-Waw" firstAttribute="top" secondItem="91c-r2-Xcm" secondAttribute="bottom" constant="8" symbolic="YES" id="fqM-Wb-xLs"/>
+                            <constraint firstItem="9CN-rC-ZCJ" firstAttribute="top" secondItem="zq1-rF-Q1r" secondAttribute="bottom" constant="8" symbolic="YES" id="iFj-aR-6fb"/>
+                            <constraint firstItem="JV0-xY-J64" firstAttribute="top" secondItem="IiV-Sc-Waw" secondAttribute="bottom" constant="8" symbolic="YES" id="lmg-WH-0p8"/>
+                            <constraint firstItem="IiV-Sc-Waw" firstAttribute="width" secondItem="91c-r2-Xcm" secondAttribute="width" id="mmA-UY-EMD"/>
+                            <constraint firstItem="zq1-rF-Q1r" firstAttribute="top" secondItem="AAM-h3-oma" secondAttribute="bottom" id="o03-Qt-zci"/>
+                            <constraint firstItem="9CN-rC-ZCJ" firstAttribute="width" secondItem="zq1-rF-Q1r" secondAttribute="width" id="psD-Jc-2qK"/>
+                            <constraint firstItem="91c-r2-Xcm" firstAttribute="centerX" secondItem="9CN-rC-ZCJ" secondAttribute="centerX" id="q68-tk-iXn"/>
+                            <constraint firstItem="Au8-qj-5zH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JV0-xY-J64" secondAttribute="bottom" id="xBB-jI-qAM"/>
+                            <constraint firstItem="IiV-Sc-Waw" firstAttribute="centerX" secondItem="91c-r2-Xcm" secondAttribute="centerX" id="xkl-jx-Zgd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="lUf-j1-Csz" kind="unwind" identifier="dismiss" unwindAction="reload:" id="dlx-wF-4xC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x7d-8v-zGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lUf-j1-Csz" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2549" y="127"/>
         </scene>
         <!--计时器-->
         <scene sceneID="14d-8m-WJ9">
@@ -387,7 +464,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0si-7O-nkc" id="TXu-V5-VYP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQh-vZ-Qdv">
@@ -408,7 +485,7 @@
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yCT-rm-b9z" id="f0W-jt-gjf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kua-N3-cny">
@@ -429,7 +506,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="InB-Jk-R8m" id="v7E-49-HyW">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

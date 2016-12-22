@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecordsTableViewController: UITableViewController {
+class RecordsTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,32 +22,32 @@ class RecordsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    @IBAction func eventFilter(_ sender: UIButton) {
-        let alert = UIAlertController(title: "筛选", message: "请选择要显示的类别", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: Event.FallAsleep.rawValue, style: .default, handler: { (action) in
-            self.filterEvent = Event.FallAsleep
-            self.reloadRecords()
-        }))
-
-        alert.addAction(UIAlertAction(title: Event.WakeUp.rawValue, style: .default, handler: { (action) in
-            self.filterEvent = Event.WakeUp
-            self.reloadRecords()
-        }))
-        alert.addAction(UIAlertAction(title: Event.eat.rawValue, style: .default, handler: { (action) in
-            self.filterEvent = Event.eat
-            self.reloadRecords()
-        }))
-        alert.addAction(UIAlertAction(title: Event.pop.rawValue, style: .default, handler: { (action) in
-            self.filterEvent = Event.pop
-            self.reloadRecords()
-        }))
-        alert.addAction(UIAlertAction(title: Event.all.rawValue, style: .default, handler: { (action) in
-            self.filterEvent = Event.all
-            self.reloadRecords()
-        }))
-        self.present(alert, animated: false) {        }
-    }
+//    @IBAction func eventFilter(_ sender: UIButton) {
+//        let alert = UIAlertController(title: "筛选", message: "请选择要显示的类别", preferredStyle: .actionSheet)
+//        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+//        alert.addAction(UIAlertAction(title: Event.FallAsleep.rawValue, style: .default, handler: { (action) in
+//            self.filterEvent = Event.FallAsleep
+//            self.reloadRecords()
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: Event.WakeUp.rawValue, style: .default, handler: { (action) in
+//            self.filterEvent = Event.WakeUp
+//            self.reloadRecords()
+//        }))
+//        alert.addAction(UIAlertAction(title: Event.eat.rawValue, style: .default, handler: { (action) in
+//            self.filterEvent = Event.eat
+//            self.reloadRecords()
+//        }))
+//        alert.addAction(UIAlertAction(title: Event.pop.rawValue, style: .default, handler: { (action) in
+//            self.filterEvent = Event.pop
+//            self.reloadRecords()
+//        }))
+//        alert.addAction(UIAlertAction(title: Event.all.rawValue, style: .default, handler: { (action) in
+//            self.filterEvent = Event.all
+//            self.reloadRecords()
+//        }))
+//        self.present(alert, animated: false) {        }
+//    }
     override func viewWillAppear(_ animated: Bool) {
         reloadRecords()
     }
@@ -60,7 +60,13 @@ class RecordsTableViewController: UITableViewController {
     
     fileprivate func reloadRecords() {
         tableView.reloadData()
-        
+    }
+    
+    @IBAction func reload(_ sender: UIStoryboardSegue) {
+        if let event = (sender.source as? FilterSelectingViewController)?.event {
+            self.filterEvent = event
+            reloadRecords()
+        }
     }
     
     // MARK: - Table view data source
@@ -99,6 +105,18 @@ class RecordsTableViewController: UITableViewController {
         }
     }
 
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        if let event = (popoverPresentationController.presentedViewController as? FilterSelectingViewController)?.event {
+            self.filterEvent = event
+            self.reloadRecords()
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -134,14 +152,17 @@ class RecordsTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if let dvc = segue.destination as? FilterSelectingViewController{
+            if let ppc = dvc.popoverPresentationController {
+                ppc.delegate = self
+            }
+        }
     }
-    */
 
 }
