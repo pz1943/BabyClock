@@ -10,16 +10,71 @@ import UIKit
 import SQLite
 import Charts
 
+
 class ClockViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setGesture() 
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ClockViewController.timer), userInfo: nil, repeats: true)
-
-
         // Do any additional setup after loading the view.
     }
 
+
+    override func viewWillAppear(_ animated: Bool) {
+        loadCurState()
+        stateChange()
+        refreshIntervalTime();
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    var DB: RecordDB = RecordDB()
+    var newestRecord: Record?
+    var curState: String = "空白"
+    var colonFlag: Bool = false
+    var longPressedEvent: Event?
+    
+    @IBOutlet weak var sleepInterval: UILabel!
+    @IBOutlet weak var weakupInterval: UILabel!
+    @IBOutlet weak var eatInterval: UILabel!
+    @IBOutlet weak var popInterval: UILabel!
+    
+    @IBOutlet weak var sleepTime: UILabel!
+    @IBOutlet weak var weakUpTime: UILabel!
+    @IBOutlet weak var eatTime: UILabel!
+    @IBOutlet weak var popTime: UILabel!
+    
+    @IBOutlet weak var weakUpState: UILabel!
+    @IBOutlet weak var sleepState: UILabel!
+    
+    
+    @IBOutlet weak var pop: UIButton!
+    @IBOutlet weak var eat: UIButton!
+    @IBOutlet weak var wakeUp: UIButton!
+    @IBOutlet weak var goSleep: UIButton!
+    
+    @IBAction func goSleep(_ sender: UIButton) {
+        if curState != "睡眠" {
+            let record = Record(eventName: "入睡")
+            curState = "睡眠"
+            DB.addRecord(record)
+        }
+        stateChange()
+        refreshIntervalTime();
+    }
+    
+    @IBAction func wakeUp(_ sender: UIButton) {
+        if curState != "清醒" {
+            wakeUpTrigger()
+        }
+        stateChange()
+        refreshIntervalTime();
+    }
+    
     func timer() {
         if curState == "睡眠" {
             if colonFlag {
@@ -39,55 +94,44 @@ class ClockViewController: UIViewController{
             }
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        loadCurState()
-        stateChange()
-        refreshIntervalTime();
+    
+    private func setGesture() {
+        let popGesture = UILongPressGestureRecognizer(target: self, action: #selector(ClockViewController.popLongPressed(gesture: )))
+        let eatGesture = UILongPressGestureRecognizer(target: self, action: #selector(eatLongPressed(gesture:)))
+        let wakeUpGesture = UILongPressGestureRecognizer(target: self, action: #selector(wakeUpLongPressed(gesture:)))
+        let goSleepGesture = UILongPressGestureRecognizer(target: self, action: #selector(goSleepLongPressed(gesture:)))
+        pop.addGestureRecognizer(popGesture)
+        eat.addGestureRecognizer(eatGesture)
+        wakeUp.addGestureRecognizer(wakeUpGesture)
+        goSleep.addGestureRecognizer(goSleepGesture)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    var DB: RecordDB = RecordDB()
-    var newestRecord: Record?
-    var curState: String = "空白"
-    var colonFlag: Bool = false
-    
-    @IBOutlet weak var sleepInterval: UILabel!
-    @IBOutlet weak var weakupInterval: UILabel!
-    @IBOutlet weak var eatInterval: UILabel!
-    @IBOutlet weak var popInterval: UILabel!
-    
-    @IBOutlet weak var sleepTime: UILabel!
-    @IBOutlet weak var weakUpTime: UILabel!
-    @IBOutlet weak var eatTime: UILabel!
-    @IBOutlet weak var popTime: UILabel!
-    
-    @IBOutlet weak var weakUpState: UILabel!
-    @IBOutlet weak var sleepState: UILabel!
-    
-    
-    @IBAction func goSleep(_ sender: UIButton) {
-        if curState != "睡眠" {
-            let record = Record(eventName: "入睡")
-            curState = "睡眠"
-            DB.addRecord(record)
+    func popLongPressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            longPressedEvent = Event.pop
+            performSegue(withIdentifier: "longPressed", sender: self)
         }
-        stateChange()
-        refreshIntervalTime();
     }
-    
-    @IBAction func wakeUp(_ sender: UIButton) {
-        if curState != "清醒" {
-            wakeUp()
+    @objc private func eatLongPressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            longPressedEvent = Event.eat
+            performSegue(withIdentifier: "longPressed", sender: self)
         }
-        stateChange()
-        refreshIntervalTime();
+    }
+    @objc private func wakeUpLongPressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            longPressedEvent = Event.WakeUp
+            performSegue(withIdentifier: "longPressed", sender: self)
+        }
+    }
+    @objc private func goSleepLongPressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            longPressedEvent = Event.FallAsleep
+            performSegue(withIdentifier: "longPressed", sender: self)
+        }
     }
     
-    func stateChange() {
+    private func stateChange() {
         if curState == "睡眠" {
             sleepState.text = "目前睡眠"
             weakUpState.text = "上次清醒"
@@ -102,11 +146,10 @@ class ClockViewController: UIViewController{
         } else {
             sleepState.text = "尚无数据"
             weakUpState.text = "尚无数据"
-
         }
     }
     
-    func wakeUp() {
+    private func wakeUpTrigger() {
         let record = Record(eventName: "醒来")
         curState = "清醒"
         DB.addRecord(record)
@@ -116,7 +159,7 @@ class ClockViewController: UIViewController{
     @IBAction func eat(_ sender: UIButton) {
         if curState != "清醒" {
             curState = "清醒"
-            wakeUp()
+            wakeUpTrigger()
         }
         let record = Record(eventName: "吃奶")
         DB.addRecord(record)
@@ -126,16 +169,15 @@ class ClockViewController: UIViewController{
     @IBAction func pop(_ sender: UIButton) {
         if curState != "清醒" {
             curState = "清醒"
-            wakeUp()
+            wakeUpTrigger()
         }
 
         let record = Record(eventName: "臭臭")
         DB.addRecord(record)
         refreshIntervalTime();
-
     }
     
-    func loadCurState() {
+    private func loadCurState() {
         if let lastSleepRecord = DB.loadNewestRecordOfEvent(event: Event.FallAsleep) {
             if let lastWeakUpRecord = DB.loadNewestRecordOfEvent(event: Event.WakeUp) {
                 if lastSleepRecord.ID > lastWeakUpRecord.ID {
@@ -151,7 +193,7 @@ class ClockViewController: UIViewController{
         }
     }
     
-    func refreshIntervalTime() {
+    private func refreshIntervalTime() {
         let lastSleepRecord = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)
         let lastWeakUpRecord = DB.loadNewestRecordOfEvent(event: Event.WakeUp)
         let lastEatRecord = DB.loadNewestRecordOfEvent(event: Event.eat)
@@ -166,6 +208,19 @@ class ClockViewController: UIViewController{
         popTime.text = lastPopRecord?.hourAndMinute
     }
 
+    @IBAction func timePicked(segue: UIStoryboardSegue) {
+        if let datePicker = segue.source as? BottomDatePickerViewController {
+            if let date = datePicker.date {
+                if longPressedEvent != nil {
+                    let record = Record(event: longPressedEvent!, time: date)
+                    DB.addRecord(record)
+                    loadCurState()
+                    refreshIntervalTime()
+                }
+            }
+        }
+    }
+
     /*
     // MARK: - Navigation
 
@@ -177,3 +232,4 @@ class ClockViewController: UIViewController{
     */
 
 }
+

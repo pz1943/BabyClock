@@ -64,6 +64,13 @@ struct Record {
         self.event = Event(rawValue: eventName)!
         self.time = Date()
     }
+    init(event: Event, time: Date) {
+        self.ID = Int.allZeros
+        
+        //FIXME: when eventName was wrong!
+        self.event = event
+        self.time = time
+    }
     
     var descTime: String {
         if let prevRecord = loadPreviousRecordOfSameEvent() {
