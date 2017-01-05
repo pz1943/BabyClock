@@ -73,12 +73,16 @@ struct Record {
     }
     
     var descTime: String {
+        return secondsToHourAndMinute(timeInterval: eventInterval)
+    }
+    
+    var eventInterval: TimeInterval {
         if let prevRecord = loadPreviousRecordOfSameEvent() {
-            let timeInterval = time.timeIntervalSince(prevRecord.time)
-            return secondsToHourAndMinute(timeInterval: timeInterval)
+            return time.timeIntervalSince(prevRecord.time)
         } else {
-            return "无"
+            return 0
         }
+
     }
     
     var timeIntervalTillNow: String {
@@ -87,7 +91,9 @@ struct Record {
     }
     
     private func secondsToHourAndMinute(timeInterval: Double) -> String {
-        if timeInterval < 86400 {
+        if timeInterval == 0 {
+            return "无"
+        } else if timeInterval < 86400 {
             var hours = Int(timeInterval / 3600).description
             var minutes = Int(Int(timeInterval) % 3600 / 60).description
             if (hours as NSString).length == 1 { hours = "0" + hours}
@@ -155,8 +161,6 @@ struct Record {
         }
     }
     
-
-    
     func loadPreviousRecordOfSameEvent() -> Record? {
         let preEvent: Event
         switch event {
@@ -166,5 +170,4 @@ struct Record {
         }
         return DB.loadRecordOfEventNextToID(event: preEvent, ID: ID)
     }
-    
 }

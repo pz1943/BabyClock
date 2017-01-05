@@ -34,6 +34,9 @@ class DBModel {
             ).first!
         print(path)
         db = try! Connection("\(path)/db.sqlite3")
+        try db.createCollation("NODIACRITIC") { lhs, rhs in
+            return lhs.compare(rhs, options: .)
+        }
     }
 }
 
@@ -172,5 +175,16 @@ class RecordDB {
             }
         }
         return nil
+    }
+    
+    func loadRecordsOfDay(date: Date) -> [Record] {
+        let date = Calendar.current.startOfDay(for: date)
+        let alice = recordTable.filter(timeExpression > date)
+        var records: [Record] = []
+        let rows = try! db.prepare(alice)
+        for row in rows {
+            records.append(Record(ID: row[self.IDExpression], eventName: row[eventNameExpression], time: row[timeExpression]))
+        }
+        return records
     }
 }

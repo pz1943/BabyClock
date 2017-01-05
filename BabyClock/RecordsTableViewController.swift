@@ -22,32 +22,7 @@ class RecordsTableViewController: UITableViewController, UIPopoverPresentationCo
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-//    @IBAction func eventFilter(_ sender: UIButton) {
-//        let alert = UIAlertController(title: "筛选", message: "请选择要显示的类别", preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
-//        alert.addAction(UIAlertAction(title: Event.FallAsleep.rawValue, style: .default, handler: { (action) in
-//            self.filterEvent = Event.FallAsleep
-//            self.reloadRecords()
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: Event.WakeUp.rawValue, style: .default, handler: { (action) in
-//            self.filterEvent = Event.WakeUp
-//            self.reloadRecords()
-//        }))
-//        alert.addAction(UIAlertAction(title: Event.eat.rawValue, style: .default, handler: { (action) in
-//            self.filterEvent = Event.eat
-//            self.reloadRecords()
-//        }))
-//        alert.addAction(UIAlertAction(title: Event.pop.rawValue, style: .default, handler: { (action) in
-//            self.filterEvent = Event.pop
-//            self.reloadRecords()
-//        }))
-//        alert.addAction(UIAlertAction(title: Event.all.rawValue, style: .default, handler: { (action) in
-//            self.filterEvent = Event.all
-//            self.reloadRecords()
-//        }))
-//        self.present(alert, animated: false) {        }
-//    }
+
     override func viewWillAppear(_ animated: Bool) {
         reloadRecords()
     }

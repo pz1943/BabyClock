@@ -10,7 +10,6 @@ import UIKit
 import SQLite
 import Charts
 
-
 class ClockViewController: UIViewController{
 
     override func viewDidLoad() {
@@ -18,9 +17,64 @@ class ClockViewController: UIViewController{
         setGesture() 
         Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ClockViewController.timer), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
+        setPieChart()
     }
 
+    private func setPieChart() {
+        clockView.backgroundColor = UIColor.white
+        clockView.translatesAutoresizingMaskIntoConstraints = false
+        clockView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        self.view.addSubview(clockView)
+        
+        let left = NSLayoutConstraint(item: clockView, attribute: .leading, relatedBy: .equal, toItem: chartsContainer, attribute: .leadingMargin, multiplier: 1, constant: 0)
+        let right = NSLayoutConstraint(item: clockView, attribute: .trailing , relatedBy: .equal, toItem: chartsContainer, attribute: .trailingMargin, multiplier: 1, constant: 0)
+        let top = NSLayoutConstraint(item: clockView, attribute: .top , relatedBy: .equal, toItem: chartsContainer, attribute: .top, multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint(item: clockView, attribute: .bottom, relatedBy: .equal, toItem: chartsContainer, attribute: .bottom, multiplier: 1, constant: 0)
+        self.view.addConstraints([left, right, top, bottom])
 
+        
+        let date = Date(timeIntervalSinceNow: -50000)
+        let records = DB.loadRecordsOfDay(date: date)
+        let data = loadClockChartDate(records: records)
+        clockView.chartDate = data
+    }
+    
+    private func loadClockChartDate(records: [Record]) -> [ClockChartData] {
+        var dates: [ClockChartData] = []
+        for record in records {
+            if let noon = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: record.time) {
+                if record.time < noon{
+                    switch record.event {
+                    case .eat:
+                        let color = UIColor.green
+                        let begin: Date = record.time
+                        let end: Date = Date(timeInterval: 600, since: begin)
+                        dates.append(ClockChartData(begin: begin, end: end, color: color))
+                    case .FallAsleep:
+                        let color = UIColor.orange
+                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
+                            let end: Date = record.time
+                            dates.append(ClockChartData(begin: begin, end: end, color: color))
+                        }
+                    case .WakeUp:
+                        let color = UIColor.cyan
+                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
+                            let end: Date = record.time
+                            dates.append(ClockChartData(begin: begin, end: end, color: color))
+                        }
+                    case .pop:
+                        let color = UIColor.red
+                        let begin: Date = record.time
+                        let end: Date = Date(timeInterval: 120, since: begin)
+                        dates.append(ClockChartData(begin: begin, end: end, color: color))
+                    default: break
+                    }
+                }
+            }
+        }
+        return dates
+    }
     override func viewWillAppear(_ animated: Bool) {
         loadCurState()
         stateChange()
@@ -37,7 +91,9 @@ class ClockViewController: UIViewController{
     var curState: String = "空白"
     var colonFlag: Bool = false
     var longPressedEvent: Event?
+    var clockView: PzClockChartView = PzClockChartView()
     
+    @IBOutlet weak var chartsContainer: UIView!
     @IBOutlet weak var sleepInterval: UILabel!
     @IBOutlet weak var weakupInterval: UILabel!
     @IBOutlet weak var eatInterval: UILabel!
@@ -51,7 +107,9 @@ class ClockViewController: UIViewController{
     @IBOutlet weak var weakUpState: UILabel!
     @IBOutlet weak var sleepState: UILabel!
     
-    
+    //--------------------------------------
+    //buttons
+
     @IBOutlet weak var pop: UIButton!
     @IBOutlet weak var eat: UIButton!
     @IBOutlet weak var wakeUp: UIButton!
@@ -75,26 +133,35 @@ class ClockViewController: UIViewController{
         refreshIntervalTime();
     }
     
-    func timer() {
-        if curState == "睡眠" {
-            if colonFlag {
-                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNow
-                colonFlag = false
-            } else {
-                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNowWithoutColon
-                colonFlag = true
-            }
-        } else if curState == "清醒" {
-            if colonFlag {
-                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNow
-                colonFlag = false
-            } else {
-                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNowWithoutColon
-                colonFlag = true
-            }
-        }
+    private func wakeUpTrigger() {
+        let record = Record(eventName: "醒来")
+        curState = "清醒"
+        DB.addRecord(record)
+        stateChange()
     }
     
+    @IBAction func eat(_ sender: UIButton) {
+        if curState != "清醒" {
+            curState = "清醒"
+            wakeUpTrigger()
+        }
+        let record = Record(eventName: "吃奶")
+        DB.addRecord(record)
+        refreshIntervalTime();
+    }
+    
+    @IBAction func pop(_ sender: UIButton) {
+        if curState != "清醒" {
+            curState = "清醒"
+            wakeUpTrigger()
+        }
+        
+        let record = Record(eventName: "臭臭")
+        DB.addRecord(record)
+        refreshIntervalTime();
+    }
+    
+    //set gesture
     private func setGesture() {
         let popGesture = UILongPressGestureRecognizer(target: self, action: #selector(ClockViewController.popLongPressed(gesture: )))
         let eatGesture = UILongPressGestureRecognizer(target: self, action: #selector(eatLongPressed(gesture:)))
@@ -131,6 +198,27 @@ class ClockViewController: UIViewController{
         }
     }
     
+    
+    //refresh
+    func timer() {
+        if curState == "睡眠" {
+            if colonFlag {
+                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNow
+                colonFlag = false
+            } else {
+                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNowWithoutColon
+                colonFlag = true
+            }
+        } else if curState == "清醒" {
+            if colonFlag {
+                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNow
+                colonFlag = false
+            } else {
+                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNowWithoutColon
+                colonFlag = true
+            }
+        }
+    }
     private func stateChange() {
         if curState == "睡眠" {
             sleepState.text = "目前睡眠"
@@ -147,34 +235,6 @@ class ClockViewController: UIViewController{
             sleepState.text = "尚无数据"
             weakUpState.text = "尚无数据"
         }
-    }
-    
-    private func wakeUpTrigger() {
-        let record = Record(eventName: "醒来")
-        curState = "清醒"
-        DB.addRecord(record)
-        stateChange()
-    }
-    
-    @IBAction func eat(_ sender: UIButton) {
-        if curState != "清醒" {
-            curState = "清醒"
-            wakeUpTrigger()
-        }
-        let record = Record(eventName: "吃奶")
-        DB.addRecord(record)
-        refreshIntervalTime();
-    }
-    
-    @IBAction func pop(_ sender: UIButton) {
-        if curState != "清醒" {
-            curState = "清醒"
-            wakeUpTrigger()
-        }
-
-        let record = Record(eventName: "臭臭")
-        DB.addRecord(record)
-        refreshIntervalTime();
     }
     
     private func loadCurState() {
