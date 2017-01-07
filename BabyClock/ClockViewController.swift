@@ -8,7 +8,6 @@
 
 import UIKit
 import SQLite
-import Charts
 
 class ClockViewController: UIViewController{
 

@@ -34,9 +34,7 @@ class DBModel {
             ).first!
         print(path)
         db = try! Connection("\(path)/db.sqlite3")
-        try db.createCollation("NODIACRITIC") { lhs, rhs in
-            return lhs.compare(rhs, options: .)
-        }
+        
     }
 }
 
