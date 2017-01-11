@@ -27,8 +27,7 @@ struct Record {
     let monthFormatter = DateFormatter()
     let dayFormatter = DateFormatter()
     let hourAndMinuteFormatter = DateFormatter()
-    
-    var DB = RecordDB()
+    var DB = RecordDB.sharedInstance
     
     init(ID: Int, event: Event, time: Date) {
         monthFormatter.dateFormat = "MM"
@@ -73,7 +72,7 @@ struct Record {
     }
     
     var descTime: String {
-        return secondsToHourAndMinute(timeInterval: eventInterval)
+        return eventInterval.HAndM
     }
     
     var eventInterval: TimeInterval {
@@ -82,46 +81,20 @@ struct Record {
         } else {
             return 0
         }
-
     }
     
     var timeIntervalTillNow: String {
         let seconds = -time.timeIntervalSinceNow
-        return secondsToHourAndMinute(timeInterval: seconds)
+        return seconds.HAndM
     }
     
-    private func secondsToHourAndMinute(timeInterval: Double) -> String {
-        if timeInterval == 0 {
-            return "无"
-        } else if timeInterval < 86400 {
-            var hours = Int(timeInterval / 3600).description
-            var minutes = Int(Int(timeInterval) % 3600 / 60).description
-            if (hours as NSString).length == 1 { hours = "0" + hours}
-            if (minutes as NSString).length == 1 { minutes = "0" + minutes}
-
-            return hours + ":" + minutes
-        } else {
-            return Int(timeInterval/86400).description + "天"
-        }
-    }
     
     var timeIntervalTillNowWithoutColon: String {
         let seconds = -time.timeIntervalSinceNow
-        return secondsToHourAndMinuteWithoutColon(timeInterval: seconds)
+        return seconds.HAndMWithoutColon
     }
     
-    private func secondsToHourAndMinuteWithoutColon(timeInterval: Double) -> String {
-        if timeInterval < 86400 {
-            var hours = Int(timeInterval / 3600).description
-            var minutes = Int(Int(timeInterval) % 3600 / 60).description
-            if (hours as NSString).length == 1 { hours = "0" + hours}
-            if (minutes as NSString).length == 1 { minutes = "0" + minutes}
-            
-            return hours + " " + minutes
-        } else {
-            return Int(timeInterval/86400).description + "天"
-        }
-    }
+
 
     
     var description: String {

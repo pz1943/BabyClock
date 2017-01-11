@@ -20,6 +20,7 @@
 		2C4DF6A11DFECF52000B141E /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A01DFECF52000B141E /* DBModel.swift */; };
 		2C4DF6A31DFFE7E4000B141E /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A21DFFE7E4000B141E /* RecordTableViewCell.swift */; };
 		2C4DF6A71E0129BE000B141E /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4DF6A61E0129BD000B141E /* Record.swift */; };
+		2C5D81651E226415006794E4 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5D81641E226415006794E4 /* TimeInterval.swift */; };
 		2C6D78181E08383D00C81B90 /* RecordsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6D78171E08383D00C81B90 /* RecordsTableViewController.swift */; };
 		2C8048211E0C135D00218794 /* FilterSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8048201E0C135D00218794 /* FilterSelectingViewController.swift */; };
 		2CB99D6C1E0D188B00735D9F /* BottomDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB99D6B1E0D188B00735D9F /* BottomDatePickerViewController.swift */; };
@@ -63,6 +64,7 @@
 		2C4DF6A01DFECF52000B141E /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBModel.swift; sourceTree = "<group>"; };
 		2C4DF6A21DFFE7E4000B141E /* RecordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
 		2C4DF6A61E0129BD000B141E /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		2C5D81641E226415006794E4 /* TimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		2C6D78171E08383D00C81B90 /* RecordsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsTableViewController.swift; sourceTree = "<group>"; };
 		2C8048201E0C135D00218794 /* FilterSelectingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSelectingViewController.swift; sourceTree = "<group>"; };
 		2CB99D6B1E0D188B00735D9F /* BottomDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomDatePickerViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				2C4DF6A01DFECF52000B141E /* DBModel.swift */,
 				2C4DF6A61E0129BD000B141E /* Record.swift */,
+				2C5D81641E226415006794E4 /* TimeInterval.swift */,
 				2C4DF69A1DFEC0B8000B141E /* RootViewController.swift */,
 				2C4DF69C1DFEC0E7000B141E /* ClockViewController.swift */,
 				2C2A765E1E154777003120F6 /* PzClockChartView.swift */,
@@ -376,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C6D78181E08383D00C81B90 /* RecordsTableViewController.swift in Sources */,
+				2C5D81651E226415006794E4 /* TimeInterval.swift in Sources */,
 				2C4DF6A11DFECF52000B141E /* DBModel.swift in Sources */,
 				2C8048211E0C135D00218794 /* FilterSelectingViewController.swift in Sources */,
 				2C4DF69D1DFEC0E7000B141E /* ClockViewController.swift in Sources */,
@@ -545,7 +549,7 @@
 				INFOPLIST_FILE = BabyClock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pz1943.BabyClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -563,7 +567,7 @@
 				INFOPLIST_FILE = BabyClock/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pz1943.BabyClock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

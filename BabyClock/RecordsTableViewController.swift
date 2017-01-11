@@ -24,16 +24,23 @@ class RecordsTableViewController: UITableViewController, UIPopoverPresentationCo
     
 
     override func viewWillAppear(_ animated: Bool) {
+        center.addObserver(self, selector: #selector(self.reloadRecords), name: NSNotification.Name(rawValue: "DataNeedsRefreshNotification"), object: nil)
         reloadRecords()
     }
-    var DB: RecordDB = RecordDB()
+    override func viewWillDisappear(_ animated: Bool) {
+        center.removeObserver(self)
+    }
+    
+    var center: NotificationCenter = NotificationCenter.default
+    var DB: RecordDB = RecordDB.sharedInstance
     var filterEvent = Event.all
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     
-    fileprivate func reloadRecords() {
+    @objc private func reloadRecords() {
         tableView.reloadData()
     }
     

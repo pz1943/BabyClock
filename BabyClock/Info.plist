@@ -41,5 +41,36 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>sqlite3DataBase</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.pz1943.sqlite3</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>sqlite3</string>
+			</dict>
+		</dict>
+	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
+			<key>CFBundleTypeName</key>
+			<string>sqlite3DataBase</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.pz1943.sqlite3</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

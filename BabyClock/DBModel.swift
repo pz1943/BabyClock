@@ -23,7 +23,11 @@ class DBModel {
             .documentDirectory, .userDomainMask, true
             ).first!
 //        print(path)
-        db = try! Connection("\(path)/db.sqlite3")
+        do {
+            db = try Connection("\(path)/db.sqlite3")
+        } catch let error as NSError {
+            print(error)
+        }
     }
     
     required init() {
@@ -34,7 +38,6 @@ class DBModel {
             ).first!
         print(path)
         db = try! Connection("\(path)/db.sqlite3")
-        
     }
 }
 
@@ -53,11 +56,28 @@ enum ExpressionTitle:  String, CustomStringConvertible{
 class RecordDB {
     fileprivate var db: Connection
     fileprivate var recordTable: Table
+    static let sharedInstance = RecordDB()
+
     
     fileprivate let IDExpression = Expression<Int>(ExpressionTitle.ID.description)
     fileprivate let eventNameExpression = Expression<String>(ExpressionTitle.EVENTNAME.description)
     fileprivate let timeExpression = Expression<Date>(ExpressionTitle.TIME.description)
     
+    init() {
+        self.db = DBModel.sharedInstance.getDB()
+        self.recordTable = Table("recordTable").order(timeExpression)
+        
+        try! db.run(recordTable.create(ifNotExists: true) { t in
+            t.column(IDExpression, primaryKey: true)
+            t.column(eventNameExpression)
+            t.column(timeExpression)
+        })
+    }
+    
+    func reload() {
+        DBModel.sharedInstance.reload()
+        self.db = DBModel.sharedInstance.getDB()
+    }
     var count: Int {
         get {
             return try! self.db.scalar(recordTable.count)
@@ -70,16 +90,7 @@ class RecordDB {
             return try! self.db.scalar(recordTable.filter(self.eventNameExpression == event.rawValue).count)
         }
     }
-    init() {
-        self.db = DBModel.sharedInstance.getDB()
-        self.recordTable = Table("recordTable")
-        
-        try! db.run(recordTable.create(ifNotExists: true) { t in
-            t.column(IDExpression, primaryKey: true)
-            t.column(eventNameExpression)
-            t.column(timeExpression)
-        })
-    }
+
     
     var maxID: Int? {
         get {
@@ -129,7 +140,6 @@ class RecordDB {
         let row = Array(try! db.prepare(alice)).first!
         let record = Record(ID: row[self.IDExpression], eventName: row[eventNameExpression], time: row[timeExpression])
         return record
-        
     }
     
     func loadRecordFromIndex(_ index: Int) -> Record? {
@@ -156,20 +166,18 @@ class RecordDB {
     }
     
     func loadNewestRecordOfEvent (event: Event) -> Record? {
-        if let ID = loadNewestRecord()?.ID {
-            return loadRecordOfEventNextToID(event: event, ID: ID + 1)
-        } else {
-            return nil
+        for i in 0 ... count - 1 {
+            if let record = loadRecordFromIndexOfEvent(i, event: event) {
+                return record
+            }
         }
+        return nil
     }
     
-    func loadRecordOfEventNextToID (event: Event, ID: Int) -> Record? {
-        for i in (0 ... ID - 1).reversed() {
-            let alice = recordTable.filter(IDExpression == i)
-            if let row = try! db.pluck(alice) {
-                if row[eventNameExpression] == event.rawValue {
-                    return Record(ID: row[self.IDExpression], eventName: row[eventNameExpression], time: row[timeExpression])
-                }
+    func loadRecordOfEventNextToIndex (event: Event, index: Int) -> Record? {
+        for i in (index ... count - 1) {
+            if let record = loadRecordFromIndexOfEvent(i, event: event) {
+                return record
             }
         }
         return nil

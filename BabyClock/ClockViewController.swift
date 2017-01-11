@@ -14,70 +14,17 @@ class ClockViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setGesture() 
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ClockViewController.timer), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
         setPieChart()
     }
-
-    private func setPieChart() {
-        clockView.backgroundColor = UIColor.white
-        clockView.translatesAutoresizingMaskIntoConstraints = false
-        clockView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        self.view.addSubview(clockView)
-        
-        let left = NSLayoutConstraint(item: clockView, attribute: .leading, relatedBy: .equal, toItem: chartsContainer, attribute: .leadingMargin, multiplier: 1, constant: 0)
-        let right = NSLayoutConstraint(item: clockView, attribute: .trailing , relatedBy: .equal, toItem: chartsContainer, attribute: .trailingMargin, multiplier: 1, constant: 0)
-        let top = NSLayoutConstraint(item: clockView, attribute: .top , relatedBy: .equal, toItem: chartsContainer, attribute: .top, multiplier: 1, constant: 0)
-        let bottom = NSLayoutConstraint(item: clockView, attribute: .bottom, relatedBy: .equal, toItem: chartsContainer, attribute: .bottom, multiplier: 1, constant: 0)
-        self.view.addConstraints([left, right, top, bottom])
-
-        
-        let date = Date(timeIntervalSinceNow: -50000)
-        let records = DB.loadRecordsOfDay(date: date)
-        let data = loadClockChartDate(records: records)
-        clockView.chartDate = data
-    }
-    
-    private func loadClockChartDate(records: [Record]) -> [ClockChartData] {
-        var dates: [ClockChartData] = []
-        for record in records {
-            if let noon = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: record.time) {
-                if record.time < noon{
-                    switch record.event {
-                    case .eat:
-                        let color = UIColor.green
-                        let begin: Date = record.time
-                        let end: Date = Date(timeInterval: 600, since: begin)
-                        dates.append(ClockChartData(begin: begin, end: end, color: color))
-                    case .FallAsleep:
-                        let color = UIColor.orange
-                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
-                            let end: Date = record.time
-                            dates.append(ClockChartData(begin: begin, end: end, color: color))
-                        }
-                    case .WakeUp:
-                        let color = UIColor.cyan
-                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
-                            let end: Date = record.time
-                            dates.append(ClockChartData(begin: begin, end: end, color: color))
-                        }
-                    case .pop:
-                        let color = UIColor.red
-                        let begin: Date = record.time
-                        let end: Date = Date(timeInterval: 120, since: begin)
-                        dates.append(ClockChartData(begin: begin, end: end, color: color))
-                    default: break
-                    }
-                }
-            }
-        }
-        return dates
-    }
     override func viewWillAppear(_ animated: Bool) {
-        loadCurState()
-        stateChange()
-        refreshIntervalTime();
+        center.addObserver(self, selector: #selector(self.updateUI), name: NSNotification.Name(rawValue: "DataNeedsRefreshNotification"), object: nil)
+        setTimer()
+        updateUI()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        defaultTimer?.invalidate()
+        center.removeObserver(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,7 +32,22 @@ class ClockViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
-    var DB: RecordDB = RecordDB()
+    func setTimer() {
+        defaultTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ClockViewController.timer), userInfo: nil, repeats: true)
+        
+        updateTimeInterval()
+    }
+    
+    func updateUI() {
+        loadCurState()
+        stateChange()
+        refreshIntervalTime();
+    }
+    
+    var timeInterval: TimeInterval = 0
+    var defaultTimer: Timer?
+    var center: NotificationCenter = NotificationCenter.default
+    var DB: RecordDB = RecordDB.sharedInstance
     var newestRecord: Record?
     var curState: String = "空白"
     var colonFlag: Bool = false
@@ -160,6 +122,64 @@ class ClockViewController: UIViewController{
         refreshIntervalTime();
     }
     
+    //set charts
+    
+    private func setPieChart() {
+        clockView.backgroundColor = UIColor.white
+        clockView.translatesAutoresizingMaskIntoConstraints = false
+        clockView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        self.view.addSubview(clockView)
+        
+        let left = NSLayoutConstraint(item: clockView, attribute: .leading, relatedBy: .equal, toItem: chartsContainer, attribute: .leadingMargin, multiplier: 1, constant: 0)
+        let right = NSLayoutConstraint(item: clockView, attribute: .trailing , relatedBy: .equal, toItem: chartsContainer, attribute: .trailingMargin, multiplier: 1, constant: 0)
+        let top = NSLayoutConstraint(item: clockView, attribute: .top , relatedBy: .equal, toItem: chartsContainer, attribute: .top, multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint(item: clockView, attribute: .bottom, relatedBy: .equal, toItem: chartsContainer, attribute: .bottom, multiplier: 1, constant: 0)
+        self.view.addConstraints([left, right, top, bottom])
+        
+        
+        let date = Date(timeIntervalSinceNow: -50000)
+        let records = DB.loadRecordsOfDay(date: date)
+        let data = loadClockChartDate(records: records)
+        clockView.chartDate = data
+    }
+    
+    private func loadClockChartDate(records: [Record]) -> [ClockChartData] {
+        var dates: [ClockChartData] = []
+        for record in records {
+            if let noon = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: record.time) {
+                if record.time < noon{
+                    switch record.event {
+                    case .eat:
+                        let color = UIColor.green
+                        let begin: Date = record.time
+                        let end: Date = Date(timeInterval: 600, since: begin)
+                        dates.append(ClockChartData(begin: begin, end: end, color: color))
+                    case .FallAsleep:
+                        let color = UIColor.orange
+                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
+                            let end: Date = record.time
+                            dates.append(ClockChartData(begin: begin, end: end, color: color))
+                        }
+                    case .WakeUp:
+                        let color = UIColor.cyan
+                        if let begin: Date = record.loadPreviousRecordOfSameEvent()?.time {
+                            let end: Date = record.time
+                            dates.append(ClockChartData(begin: begin, end: end, color: color))
+                        }
+                    case .pop:
+                        let color = UIColor.red
+                        let begin: Date = record.time
+                        let end: Date = Date(timeInterval: 120, since: begin)
+                        dates.append(ClockChartData(begin: begin, end: end, color: color))
+                    default: break
+                    }
+                }
+            }
+        }
+        return dates
+    }
+
     //set gesture
     private func setGesture() {
         let popGesture = UILongPressGestureRecognizer(target: self, action: #selector(ClockViewController.popLongPressed(gesture: )))
@@ -199,26 +219,30 @@ class ClockViewController: UIViewController{
     
     
     //refresh
+    
     func timer() {
         if curState == "睡眠" {
             if colonFlag {
-                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNow
+                sleepInterval.text = timeInterval.HAndM
                 colonFlag = false
             } else {
-                sleepInterval.text = DB.loadNewestRecordOfEvent(event: Event.FallAsleep)?.timeIntervalTillNowWithoutColon
+                sleepInterval.text = timeInterval.HAndMWithoutColon
+                timeInterval += 1
                 colonFlag = true
             }
         } else if curState == "清醒" {
             if colonFlag {
-                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNow
+                weakupInterval.text = timeInterval.HAndM
                 colonFlag = false
             } else {
-                weakupInterval.text = DB.loadNewestRecordOfEvent(event: Event.WakeUp)?.timeIntervalTillNowWithoutColon
+                weakupInterval.text = timeInterval.HAndMWithoutColon
+                timeInterval += 1
                 colonFlag = true
             }
         }
     }
     private func stateChange() {
+        updateTimeInterval()
         if curState == "睡眠" {
             sleepState.text = "目前睡眠"
             weakUpState.text = "上次清醒"
@@ -267,6 +291,17 @@ class ClockViewController: UIViewController{
         popTime.text = lastPopRecord?.hourAndMinute
     }
 
+    private func updateTimeInterval() {
+        if curState == "睡眠" {
+            if let record = DB.loadNewestRecordOfEvent(event: Event.FallAsleep) {
+                timeInterval = -record.time.timeIntervalSinceNow
+            }
+        } else if curState == "清醒" {
+            if let record = DB.loadNewestRecordOfEvent(event: Event.WakeUp) {
+                timeInterval = -record.time.timeIntervalSinceNow
+            }
+        }
+    }
     @IBAction func timePicked(segue: UIStoryboardSegue) {
         if let datePicker = segue.source as? BottomDatePickerViewController {
             if let date = datePicker.date {
@@ -279,6 +314,7 @@ class ClockViewController: UIViewController{
             }
         }
     }
+    
 
     /*
     // MARK: - Navigation

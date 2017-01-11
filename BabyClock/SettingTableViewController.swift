@@ -46,7 +46,7 @@ class SettingTableViewController: UITableViewController {
     func clearDateBase() {
         let alert = UIAlertController(title: "请确认！", message: "将删除所有数据，被删除的数据将无法恢复", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确认删除", style: .default, handler: { (action) in
-            RecordDB().clearRecords()
+            RecordDB.sharedInstance.clearRecords()
         }))
         alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         self.present(alert, animated: false, completion: nil)

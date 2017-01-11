@@ -13,7 +13,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        let fromPath = url.path
+        print(fromPath)
+        let toPath = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory, .userDomainMask, true
+            ).first! + "/db.sqlite3"
+        print(toPath)
+        do {
+            try FileManager.default.removeItem(atPath: toPath)
+            try FileManager.default.moveItem(atPath: fromPath, toPath: toPath)
+        } catch let error as NSError {
+            print(error)
+        }
+        RecordDB.sharedInstance.reload()
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "DataNeedsRefreshNotification"), object: nil)
+        return true
+    }
 
+    
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
